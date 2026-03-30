@@ -36,6 +36,25 @@ function main(config) {
     "store-fake-ip": true,
   };
 
+  // ===== Sniffer 配置 =====
+  config["sniffer"] = {
+    enable: true,
+    "force-dns-mapping": true,
+    "parse-pure-ip": true,
+    sniff: {
+      TLS: {
+        ports: [443, 8443],
+      },
+      HTTP: {
+        ports: [80, "8080-8880"],
+        "override-destination": true,
+      },
+      QUIC: {
+        ports: [443, 8443],
+      },
+    },
+  };
+
   // 注意：已根据要求彻底移除了 dns 配置块
 
   // ===== 删除原有字段后重建 =====
@@ -268,7 +287,8 @@ function main(config) {
       "max-failed-times": 3,
       hidden: true,
       "include-all": true,
-      filter: "(?i)(日|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK)(?!.*(尼日利亚)).*$",
+      filter: "(?i)(日|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK)",
+      "exclude-filter": "尼日利亚",
     },
     {
       name: "Korea",
@@ -328,6 +348,7 @@ function main(config) {
       behavior: "classical",
       path: "./rulesets/reject.txt",
       format: "text",
+      interval: 86400,
     },
     "Advertising-drop": {
       type: "http",
@@ -335,6 +356,7 @@ function main(config) {
       behavior: "classical",
       path: "./rulesets/reject-drop.txt",
       format: "text",
+      interval: 86400,
     },
     "Advertising-ip": {
       type: "http",
@@ -342,6 +364,7 @@ function main(config) {
       behavior: "classical",
       path: "./rulesets/reject_ip.txt",
       format: "text",
+      interval: 86400,
     },
     Apple: {
       type: "http",
@@ -349,6 +372,7 @@ function main(config) {
       behavior: "domain",
       path: "./rulesets/Apple.mrs",
       format: "mrs",
+      interval: 86400,
     },
     Apple_CN: {
       type: "http",
@@ -356,6 +380,7 @@ function main(config) {
       behavior: "ipcidr",
       path: "./rulesets/AppleCN.mrs",
       format: "mrs",
+      interval: 86400,
     },
     ChinaMax: {
       type: "http",
@@ -363,6 +388,7 @@ function main(config) {
       behavior: "classical",
       path: "./rulesets/ChinaMax.yaml", // 已确认：统一路径命名为 ChinaMax.yaml
       format: "yaml",
+      interval: 86400,
     },
     Github: {
       type: "http",
@@ -370,6 +396,7 @@ function main(config) {
       behavior: "domain",
       path: "./rulesets/Github.mrs",
       format: "mrs",
+      interval: 86400,
     },
     Patreon: {
       type: "http",
@@ -377,6 +404,7 @@ function main(config) {
       behavior: "classical",
       path: "./rulesets/Patreon_No_Resolve.yaml",
       format: "yaml",
+      interval: 86400,
     },
     Spotify: {
       type: "http",
@@ -384,6 +412,7 @@ function main(config) {
       behavior: "domain",
       path: "./rulesets/Spotify.mrs",
       format: "mrs",
+      interval: 86400,
     },
     Telegram: {
       type: "http",
@@ -391,6 +420,7 @@ function main(config) {
       behavior: "domain",
       path: "./rulesets/Telegram.mrs",
       format: "mrs",
+      interval: 86400,
     },
     Telegram_ip: {
       type: "http",
@@ -398,6 +428,7 @@ function main(config) {
       behavior: "ipcidr",
       path: "./rulesets/Telegram_ip.mrs",
       format: "mrs",
+      interval: 86400,
     },
     PayPal: {
       type: "http",
@@ -405,6 +436,7 @@ function main(config) {
       behavior: "domain",
       path: "./rulesets/PayPal.mrs",
       format: "mrs",
+      interval: 86400,
     },
     Emby: {
       type: "http",
@@ -412,6 +444,7 @@ function main(config) {
       behavior: "domain",
       path: "./rulesets/Emby.mrs",
       format: "mrs",
+      interval: 86400,
     },
     Emby_ip: {
       type: "http",
@@ -419,6 +452,7 @@ function main(config) {
       behavior: "ipcidr",
       path: "./rulesets/Emby_ip.mrs",
       format: "mrs",
+      interval: 86400,
     },
     AI: {
       type: "http",
@@ -426,6 +460,7 @@ function main(config) {
       behavior: "classical",
       path: "./rulesets/ai_non_ip.txt",
       format: "text",
+      interval: 86400,
     },
     Google: {
       type: "http",
@@ -433,6 +468,7 @@ function main(config) {
       behavior: "domain",
       path: "./rulesets/google.mrs",
       format: "mrs",
+      interval: 86400,
     },
     Google_ip: {
       type: "http",
@@ -440,6 +476,7 @@ function main(config) {
       behavior: "ipcidr",
       path: "./rulesets/google_ip.mrs",
       format: "mrs",
+      interval: 86400,
     },
     Game: {
       type: "http",
@@ -447,6 +484,7 @@ function main(config) {
       behavior: "domain",
       path: "./rulesets/games.mrs",
       format: "mrs",
+      interval: 86400,
     },
     BiliBiliIntl: {
       type: "http",
@@ -454,6 +492,7 @@ function main(config) {
       behavior: "classical",
       path: "./rulesets/BiliBiliIntl_No_Resolve.yaml",
       format: "yaml",
+      interval: 86400,
     },
     BiliBili: {
       type: "http",
@@ -461,6 +500,7 @@ function main(config) {
       behavior: "classical",
       path: "./rulesets/BiliBili_No_Resolve.yaml",
       format: "yaml",
+      interval: 86400,
     },
     GlobalMedia: {
       type: "http",
@@ -468,6 +508,7 @@ function main(config) {
       behavior: "classical",
       path: "./rulesets/stream.txt",
       format: "text",
+      interval: 86400,
     },
     "GlobalMedia-ip": {
       type: "http",
@@ -475,6 +516,7 @@ function main(config) {
       behavior: "classical",
       path: "./rulesets/stream_ip.txt",
       format: "text",
+      interval: 86400,
     },
     Notion: {
       type: "http",
@@ -482,6 +524,7 @@ function main(config) {
       behavior: "classical",
       path: "./rulesets/Notion.yaml",
       format: "yaml",
+      interval: 86400,
     },
     ESET_China: {
       type: "http",
@@ -489,6 +532,7 @@ function main(config) {
       behavior: "classical",
       path: "./rulesets/ESET_China.yaml",
       format: "yaml",
+      interval: 86400,
     },
     Privacy: {
       type: "http",
@@ -496,6 +540,7 @@ function main(config) {
       behavior: "domain",
       path: "./rulesets/Private.mrs",
       format: "mrs",
+      interval: 86400,
     },
     Privacy_ip: {
       type: "http",
@@ -503,6 +548,7 @@ function main(config) {
       behavior: "ipcidr",
       path: "./rulesets/Private_ip.mrs",
       format: "mrs",
+      interval: 86400,
     },
     Facebook: {
       type: "http",
@@ -510,6 +556,7 @@ function main(config) {
       behavior: "domain",
       path: "./rulesets/Facebook.mrs",
       format: "mrs",
+      interval: 86400,
     },
     Facebook_ip: {
       type: "http",
@@ -517,6 +564,7 @@ function main(config) {
       behavior: "ipcidr",
       path: "./rulesets/Facebook_ip.mrs",
       format: "mrs",
+      interval: 86400,
     },
   };
 
