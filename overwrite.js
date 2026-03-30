@@ -11,10 +11,11 @@ function main(config) {
   }
 
   // ===== 基础配置 =====
-  config["allow-lan"] = true;
+  config["allow-lan"] = false; // 已确认：禁止局域网连接
   config["bind-address"] = "*";
   config["mode"] = "rule";
   config["log-level"] = "warning";
+
   config["ipv6"] = true;
   config["find-process-mode"] = "strict";
   config["tcp-concurrent"] = true;
@@ -35,19 +36,21 @@ function main(config) {
     "store-fake-ip": true,
   };
 
-  // ===== 清理旧配置 =====
+  // 注意：已根据要求彻底移除了 dns 配置块
+
+  // ===== 删除原有字段后重建 =====
   delete config["proxy-groups"];
   delete config["rule-providers"];
   delete config["rules"];
 
-  // ===== 代理分组配置 =====
+  // ===== 分组配置 =====
   config["proxy-groups"] = [
     {
       name: "节点选择",
       type: "select",
       proxies: [
         "自动选择",
-        "全部节点",
+        // 已确认：不再引用"全部节点"
         "Hong Kong",
         "Taiwan",
         "Japan",
@@ -59,6 +62,7 @@ function main(config) {
       ],
     },
     {
+      // 已确认：保留该分组，供其他客户端直接在面板上查看所有节点时使用
       name: "全部节点",
       type: "select",
       "include-all": true,
@@ -66,7 +70,7 @@ function main(config) {
     {
       name: "自动选择",
       type: "url-test",
-      url: "http://1.0.0.1/generate_204",
+      url: "http://1.0.0.1/generate_204", // 已确认：添加测速URL
       interval: 300,
       tolerance: 50,
       lazy: true,
@@ -226,15 +230,16 @@ function main(config) {
       type: "select",
       proxies: ["DIRECT"],
     },
-    // 地区自动测速组
+    // 以下为地区自动测速组
     {
       name: "Hong Kong",
       type: "url-test",
-      url: "http://1.0.0.1/generate_204",
+      url: "http://1.0.0.1/generate_204", // 已确认：添加测速URL
       interval: 300,
       tolerance: 50,
       lazy: true,
       timeout: 3000,
+      "max-failed-times": 3,
       hidden: true,
       "include-all": true,
       filter: "(?i)(港|🇭🇰|HK|Hong|HKG)",
@@ -242,11 +247,12 @@ function main(config) {
     {
       name: "Taiwan",
       type: "url-test",
-      url: "http://1.0.0.1/generate_204",
+      url: "http://1.0.0.1/generate_204", // 已确认：添加测速URL
       interval: 300,
       tolerance: 50,
       lazy: true,
       timeout: 3000,
+      "max-failed-times": 3,
       hidden: true,
       "include-all": true,
       filter: "(?i)(🇹🇼|台|TW|Taiwan)",
@@ -254,11 +260,12 @@ function main(config) {
     {
       name: "Japan",
       type: "url-test",
-      url: "http://1.0.0.1/generate_204",
+      url: "http://1.0.0.1/generate_204", // 已确认：添加测速URL
       interval: 300,
       tolerance: 50,
       lazy: true,
       timeout: 3000,
+      "max-failed-times": 3,
       hidden: true,
       "include-all": true,
       filter: "(?i)(日|🇯🇵|JP|Japan|NRT|HND|KIX|CTS|FUK)(?!.*(尼日利亚)).*$",
@@ -266,11 +273,12 @@ function main(config) {
     {
       name: "Korea",
       type: "url-test",
-      url: "http://1.0.0.1/generate_204",
+      url: "http://1.0.0.1/generate_204", // 已确认：添加测速URL
       interval: 300,
       tolerance: 50,
       lazy: true,
       timeout: 3000,
+      "max-failed-times": 3,
       hidden: true,
       "include-all": true,
       filter: "(?i)(🇰🇷|韩|KR|Korea)",
@@ -278,11 +286,12 @@ function main(config) {
     {
       name: "Singapore",
       type: "url-test",
-      url: "http://1.0.0.1/generate_204",
+      url: "http://1.0.0.1/generate_204", // 已确认：添加测速URL
       interval: 300,
       tolerance: 50,
       lazy: true,
       timeout: 3000,
+      "max-failed-times": 3,
       hidden: true,
       "include-all": true,
       filter: "(?i)(🇸🇬|新|SG|Singapore)",
@@ -290,11 +299,12 @@ function main(config) {
     {
       name: "United States",
       type: "url-test",
-      url: "http://1.0.0.1/generate_204",
+      url: "http://1.0.0.1/generate_204", // 已确认：添加测速URL
       interval: 300,
       tolerance: 50,
       lazy: true,
       timeout: 3000,
+      "max-failed-times": 3,
       hidden: true,
       "include-all": true,
       filter:
@@ -351,7 +361,7 @@ function main(config) {
       type: "http",
       url: "https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/refs/heads/master/rule/Clash/ChinaMax/ChinaMax_Classical.yaml",
       behavior: "classical",
-      path: "./rulesets/ChinaMax.yaml",
+      path: "./rulesets/ChinaMax.yaml", // 已确认：统一路径命名为 ChinaMax.yaml
       format: "yaml",
     },
     Github: {
@@ -543,9 +553,10 @@ function main(config) {
     "RULE-SET,BiliBiliIntl,Bilibili",
     "RULE-SET,BiliBili,Bilibili",
     "RULE-SET,Apple_CN,DIRECT",
+    "DOMAIN-SUFFIX,bytecatcode.org,DIRECT",
+    "DOMAIN-SUFFIX,lamclod.cn,DIRECT",
     "RULE-SET,ChinaMax,DIRECT",
     "RULE-SET,ESET_China,DIRECT",
-    "DOMAIN-SUFFIX,bytecatcode.org,DIRECT",
     "RULE-SET,Advertising-ip,REJECT",
     "RULE-SET,Privacy_ip,REJECT",
     "RULE-SET,GlobalMedia-ip,Global Media",
@@ -554,7 +565,7 @@ function main(config) {
     "RULE-SET,Google_ip,Google",
     "RULE-SET,Emby_ip,Emby",
     "GEOIP,CN,Global Direct,no-resolve",
-    "MATCH,节点选择", // 修改为指向“节点选择”组
+    "MATCH,节点选择",
   ];
 
   return config;
