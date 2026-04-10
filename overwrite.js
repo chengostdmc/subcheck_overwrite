@@ -603,7 +603,7 @@ function main(config) {
     "DOMAIN-SUFFIX,ovalyraa.com,DIRECT",
     "RULE-SET,Apple_CN,DIRECT",
     "DOMAIN-SUFFIX,bytecatcode.org,DIRECT",
-    "DOMAIN-SUFFIX,hydrogen1693.com,DIREXT",
+    "DOMAIN-SUFFIX,hydrogen1693.com,DIRECT",
     "DOMAIN-SUFFIX,lamclod.cn,DIRECT",
     "RULE-SET,ChinaMax,DIRECT",
     "RULE-SET,ESET_China,DIRECT",
