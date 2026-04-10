@@ -600,6 +600,7 @@ function main(config) {
     "RULE-SET,Notion,Github",
     "RULE-SET,BiliBiliIntl,Bilibili",
     "RULE-SET,BiliBili,Bilibili",
+    "DOMAIN-SUFFIX,ovalyraa.com,DIRECT",
     "RULE-SET,Apple_CN,DIRECT",
     "DOMAIN-SUFFIX,bytecatcode.org,DIRECT",
     "DOMAIN-SUFFIX,lamclod.cn,DIRECT",
